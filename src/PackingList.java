@@ -1,6 +1,8 @@
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +23,7 @@ import java.util.regex.Pattern;
 public class PackingList {
     XSSFWorkbook Workbook;
     List<Cell>UsedRange;
+    Map<String, String>CaseRows;
 
     //Constructor
     PackingList(String filepath) throws FileNotFoundException, IOException {
@@ -27,6 +31,7 @@ public class PackingList {
         FileInputStream fileInputStream = new FileInputStream(file);
         Workbook = new XSSFWorkbook(fileInputStream);
         UsedRange = getUsedRange();
+        CaseRows = getCaseRows();
     }
 
     List<String> getSheetNames() {
@@ -111,6 +116,31 @@ public class PackingList {
         return findColumnIndex(pattern);
     }
 
+
+    boolean isMergedCell(Cell cell){
+        return true;
+    }
+
+    Map<String, String> getCaseRows(){
+//    void getCaseRows(){
+        //returns a dictionary with the row number and the case number it belongs to
+        XSSFSheet sheet = Workbook.getSheet("Sheet1");
+        List<CellRangeAddress> mergedcells = sheet.getMergedRegions();
+        Iterator<CellRangeAddress> mergedCellsIterator = mergedcells.iterator();
+        while (mergedCellsIterator.hasNext()){
+            CellRangeAddress cellRangeAddress = mergedCellsIterator.next();
+            int firstColumn = cellRangeAddress.getFirstColumn();
+            int firstRow = cellRangeAddress.getFirstRow();
+            int lastRow = cellRangeAddress.getLastRow();
+
+            if (firstColumn == 0 && firstRow >3 ){
+
+            }else{
+                continue;
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         PackingList pl = new PackingList("D:\\myScripts\\InvoiceMaker2\\sample1\\0Y02181600000SHWA05K with price.xlsx");
         System.out.println(pl.getSheetNames());
@@ -120,7 +150,7 @@ public class PackingList {
         System.out.println("quantity " + pl.getQuantityColumn());
         System.out.print("uom " + pl.getUOMColumn());
         System.out.println("unit price " + pl.getUnitPriceColumn());
-
+        pl.getCaseRows();
         System.out.println("this is a test");
     }
 
