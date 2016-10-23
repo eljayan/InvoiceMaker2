@@ -19,5 +19,17 @@
         <jarDirectory url="file://C:/Program Files (x86)/Java/jdk1.8.0_91/lib/poi-3.14" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://C:/Program Files/Java/jdk1.8.0_101/lib/poi-3.15" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://C:/Program Files/Java/jdk1.8.0_101/lib/poi-3.15/docs/apidocs" />
+        </JAVADOC>
+        <SOURCES />
+        <jarDirectory url="file://C:/Program Files/Java/jdk1.8.0_101/lib/poi-3.15" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
